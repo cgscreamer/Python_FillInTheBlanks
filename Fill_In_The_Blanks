@@ -13,34 +13,53 @@ First_Test_Answers = ["market", "grandmother", "wolf", "basket"]
 Second_Test_Answers = ["pie", "cry", "play", "affectionate"]
 Third_Test_Answers = ["lamb", "dead", "school", "bread"]
 
+Affirmative = ["yes", "Yes", "Y", "y"]
+
+Game_One_Level = ["Easy", "easy"]
+
+Game_Two_Level = ["Medium", "medium"]
+
+Game_Three_Level = ["Hard", "hard"]
 
 ####################
 # Helper Functions and probably a lot of stuff I broke
 
-def greeting(player_name):
+def greeting():
     # Say Hello, and give the player a name.
+    player_name = raw_input("Hi! What's your name, stranger?  ")
+    if player_name == " ":
+        print "That's not a name!"
+        return greeting()
+    elif player_name == "":
+        print "That's not a name!"
+        return greeting()
+    else:
+        print "\nGreat! Welcome, " + player_name + ". Let's play a Game! "
 
-    print "\nGreat! Welcome, " + player_name + ". Let's play a Game! "
 
-
-def get_setup(difficulty):
+def get_setup():
     # Getting the difficulty levels set up correctly
+    print 'What Level would you like to try? Easy/Medium/Hard?'
+    difficulty = raw_input("Choose a Level: ")
 
-    if difficulty == "Easy":
+    if difficulty in Game_One_Level:
         print "\nYou chose: Easy.\n"
         return Game_One()
 
-    elif difficulty == "Medium":
+    elif difficulty in Game_Two_Level:
         print "\nYou chose: Medium \n"
         return Game_Two()
 
-    else:  difficulty == "Hard"
-    print "\nYou chose: Hard \n"
-    return Game_Three()
+    elif  difficulty in Game_Three_Level:
+        print "\nYou chose: Hard \n"
+        return Game_Three()
+
+    else:
+        return Game_Restart()
 
 def Game_Restart():
     restart = raw_input('Would you like to play again? (yes/no): ')
-    if restart == "yes" or "YES" or "y" or "Y":
+    if restart in Affirmative:
         return Get_Started()
     else:
         print "Ok, See you later, Alligator!"
@@ -57,28 +76,35 @@ def Game_One():
 
     print "\nWell done! That's correct!\n"
 
-    print First_Test
+    First_Test_1 = (First_Test.replace(blanks[0], First_Test_Answers[0]))
+    print First_Test_1
     First_Test_Q2 = raw_input("What goes into slot ___2___?: ")
     while First_Test_Q2 != First_Test_Answers[1]:
-        print "\nYour answer was wrong. Trry again.\n"
+        print "\nYour answer was wrong. Try again.\n"
         First_Test_Q2 = raw_input("Type it here again: ")
     print "\nWell done! That's correct!\n"
 
-    print First_Test
+    First_Test_2 = (First_Test_1.replace(blanks[1], First_Test_Answers[1]))
+    print First_Test_2
     First_Test_Q3 = raw_input("What goes into slot ___3___?: ")
     while First_Test_Q3 != First_Test_Answers[2]:
         print "\nYour answer was wrong. Trry again.\n"
         First_Test_Q3 = raw_input("Type it here again: ")
     print "\nWell done! That's correct!\n"
 
-    print First_Test
+    First_Test_3 = (First_Test_2.replace(blanks[2], First_Test_Answers[2]))
+    print First_Test_3
     First_Test_Q4 = raw_input("What goes into slot ___4___?: ")
     while First_Test_Q4 != First_Test_Answers[3]:
         print "\nYour answer was wrong. Trry again.\n"
         First_Test_Q4 = raw_input("Type it here again: ")
         print "\nWell done! That's correct!\n"
-        print " "
+    First_Test_4 = (First_Test_3.replace(blanks[3], First_Test_Answers[3]))
+    print " "
+    print First_Test_4
+    print " "
     print "You got everything correct! You Genius!!"
+    print " "
     Game_Restart()
 
 def Game_Two():
@@ -90,28 +116,34 @@ def Game_Two():
 
     print "\nWell done! That's correct!\n"
 
-    print Second_Test
+    Second_Test_1 = (Second_Test.replace(blanks[0], Second_Test_Answers[0]))
+    print Second_Test_1
     Second_Test_Q2 = raw_input("What goes into slot ___2___?: ")
     while Second_Test_Q2 != Second_Test_Answers[1]:
         print "\nYour answer was wrong. Trry again.\n"
         Second_Test_Q2 = raw_input("Type it here again: ")
     print "\nWell done! That's correct!\n"
 
-    print Second_Test
+    Second_Test_2 = (Second_Test_1.replace(blanks[1], Second_Test_Answers[1]))
+    print Second_Test_2
     Second_Test_Q3 = raw_input("What goes into slot ___3___?: ")
     while Second_Test_Q3 != Second_Test_Answers[2]:
         print "\nYour answer was wrong. Trry again.\n"
         Second_Test_Q3 = raw_input("Type it here again: ")
     print "\nWell done! That's correct!\n"
-
-    print Second_Test
+    Second_Test_3 = (Second_Test_2.replace(blanks[2], Second_Test_Answers[2]))
+    print Second_Test_3
     Second_Test_Q4 = raw_input("What goes into slot ___4___?: ")
     while Second_Test_Q4 != Second_Test_Answers[3]:
         print "\nYour answer was wrong. Trry again.\n"
         Second_Test_Q4 = raw_input("Type it here again: ")
         print "\nWell done! That's correct!\n"
         print " "
+    Second_Test_4 = (Second_Test_3.replace(blanks[3], Second_Test_Answers[3]))
+    print Second_Test_4
+    print " "
     print "You got everything correct! You Genius!!"
+    print " "
     Game_Restart()
 
 def Game_Three():
@@ -123,28 +155,35 @@ def Game_Three():
 
     print "\nWell done! That's correct!\n"
 
-    print Third_Test
+    Third_Test_1 = (Third_Test.replace(blanks[0], Third_Test_Answers[0]))
+    print Third_Test_1
     Third_Test_Q2 = raw_input("What goes into slot ___2___?: ")
     while Third_Test_Q2 != Third_Test_Answers[1]:
         print "\nYour answer was wrong. Trry again.\n"
         Third_Test_Q2 = raw_input("Type it here again: ")
     print "\nWell done! That's correct!\n"
 
-    print Third_Test
+    Third_Test_2 = (Third_Test_1.replace(blanks[1], Third_Test_Answers[1]))
+    print Third_Test_2
     Third_Test_Q3 = raw_input("What goes into slot ___3___?: ")
     while Third_Test_Q3 != Third_Test_Answers[2]:
         print "\nYour answer was wrong. Trry again.\n"
         Third_Test_Q3 = raw_input("Type it here again: ")
     print "\nWell done! That's correct!\n"
 
-    print Third_Test
+    Third_Test_3 = (Third_Test_2.replace(blanks[2], Third_Test_Answers[2]))
+    print Third_Test_3
     Third_Test_Q4 = raw_input("What goes into slot ___4___?: ")
     while Third_Test_Q4 != Third_Test_Answers[3]:
         print "\nYour answer was wrong. Trry again.\n"
         Third_Test_Q4 = raw_input("Type it here again: ")
         print "\nWell done! That's correct!\n"
         print " "
+    Third_Test_4 = (Third_Test_3.replace(blanks[3], Third_Test_Answers[3]))
+    print Third_Test_4
+    print " "
     print "You got everything correct! You Genius!!"
+    print " "
     Game_Restart()
 
 
@@ -152,18 +191,15 @@ def Game_Three():
 # Hopefully the fruit of all this labour
 
 def Get_Started():
-    player_name = raw_input("Hi! What's your name, stranger?  ")
-    greeting(player_name)
-    begin = raw_input("Well, " + player_name + ". Would you like to begin? [Type: yes/no]: ")
-    if begin == "yes" or "YES" or "y" or "Y":
+    greeting()
+    begin = raw_input("Would you like to begin? [Type: yes/no]: ")
+    if begin in Affirmative:
         print "Fantastic! Let's begin:"
         print " "
-        print 'What Level would you like to try? Easy/Medium/Hard?'
-        difficulty = raw_input("Choose a Level: ")
-        return get_setup(difficulty)
-
-    else:
+        return get_setup()
+    elif begin == "no":
         print "Thanks for stopping by! Now...RUN!!"
+        
 
 
 Get_Started()
