@@ -21,6 +21,11 @@ Game_Two_Level = ["Medium", "medium"]
 
 Game_Three_Level = ["Hard", "hard"]
 
+tests = [First_Test, Second_Test, Third_Test]
+answers = [First_Test_Answers, Second_Test_Answers, Third_Test_Answers]
+
+LEVELS = ["easy", "medium", "hard"]
+
 ####################
 # Helper Functions and probably a lot of stuff I broke
 
@@ -38,134 +43,75 @@ def greeting():
 
 def get_setup():
     # Getting the difficulty levels set up correctly
+    # lower() transforms the string in all lowercase so you have to specify: `easy, Easy, EAsy, EASy`
     print 'What Level would you like to try? Easy/Medium/Hard?'
     difficulty = raw_input("Choose a Level: ")
+    index = 0
+    choose_level = None
+    for level in LEVELS:
+        if difficulty == level.lower():
+            choose_level = index
+        index += 1
 
-    if difficulty in Game_One_Level:
-        print "\nYou chose: Easy.\n"
-        return Game_One()
-
-    elif difficulty in Game_Two_Level:
-        print "\nYou chose: Medium \n"
-        return Game_Two()
-
-    elif  difficulty in Game_Three_Level:
-        print "\nYou chose: Hard \n"
-        return Game_Three()
-
-    else:
-        return Game_Restart()
+    if choose_level == None:
+        print "Wrong level."
+        exit()
+    chosen_test = tests[chose_level]
+    chosen_answers = answers[chose_level]
+    game(chosen_test, chosen_answers)
 
 def Game_Restart():
+    #For after the game has completed, if the player wants to play again
     restart = raw_input('Would you like to play again? (yes/no): ')
     if restart in Affirmative:
         return Get_Started()
     else:
         print "Ok, See you later, Alligator!"
 
-def check_answer_First_Test(user_input, First_Test_Answers, blanks_index):
-    '''
-    This is used to validate user answers with our correct answers list.
-    '''
+def game(test, answers):
+    def play_game(level):
+#Example function with PEP 484 type annotations.
+#    Input:
+#        level (test): Test filled with blanks
+#    Behavior:
+#        For a given level it launches the main game logic.
+#        It checks the user input.
+#        If the user guesses right the current blanks is replaced
+#        with the right answer then the quiz is print.
+#        This process happens until all blanks are found
+#    Return:
+#        None.
+#    """
+        index = 0
+    for answer in answers:
+        print test
+        check_answer(answer, index)
+        test = test.replace(blanks[index], answer)
+        index += 1
+    print test
 
-    if user_input == First_Test_Answers[blanks_index]:
-        return "Correct"
-    else:
-        return "Wrong"
-    pass
-
-def check_answer_Second_Test(user_input, Second_Test_Answers, blanks_index):
-    '''
-    This is used to validate user answers with our correct answers list.
-    '''
-
-    if user_input == Second_Test_Answers[blanks_index]:
-        return "Correct"
-    else:
-        return "Wrong"
-    pass
-
-def check_answer_Third_Test(user_input, Third_Test_Answers, blanks_index):
-    '''
-    This is used to validate user answers with our correct answers list.
-    '''
-
-    if user_input == Third_Test_Answers[blanks_index]:
-        return "Correct"
-    else:
-        return "Wrong"
-    pass
-
-###########################################
-# Games
-
-def Game_One():
-    First_Test = "[Options: market, grandmother, wolf, basket] Little Red Riding Hood went to the ___1___ to buy her ___2___ some apples.On her way through the forest, she saw a scary ___3___ that she ran away from but dropped her ___4___ . She was awfully sad!"
-    print First_Test
-    blanks_index = 0
-    while blanks_index < len(blanks):
-        user_input= raw_input("What goes into slot" + blanks[blanks_index] + ": ")
-        while user_input != First_Test_Answers[blanks_index]:
-            print "\nYour answer was wrong. Try again.\n"
-            user_input = raw_input("Type it here again: ")
-        else:
-            print "nice job! that is the right answer!\n"
-            if check_answer_First_Test(user_input, First_Test_Answers, blanks_index) == "Correct":
-                First_Test = First_Test.replace(blanks[blanks_index],user_input)
-                blanks_index += 1
-                print First_Test
-                if blanks_index == len(blanks):
-                    print " "
-                    print "You got everything correct! You Genius!!"
-                    print " "
-                    Game_Restart()
-
-def Game_Two():
-    Second_Test = "[Options: pie, affectionate, cry, play,] Georgie Porgie Pudding and ___1___. Kissed the girls and made them ___2___. When the boys came out to ___3___. He kissed them to cause he was very ___4___ that way."
-    print Second_Test
-    blanks_index = 0
-    while blanks_index < len(blanks):
-        user_input= raw_input("What goes into slot" + blanks[blanks_index] + ": ")
-        while user_input != Second_Test_Answers[blanks_index]:
-            print "\nYour answer was wrong. Try again.\n"
-            user_input = raw_input("Type it here again: ")
-        else:
-            print "nice job! that is the right answer!\n"
-            if check_answer_Second_Test(user_input, Second_Test_Answers, blanks_index) == "Correct":
-                Second_Test = Second_Test.replace(blanks[blanks_index],user_input)
-                blanks_index += 1
-                print Second_Test
-                if blanks_index == len(blanks):
-                    print " "
-                    print "You got everything correct! You Genius!!"
-                    print " "
-                    Game_Restart()
-
-def Game_Three():
-    Third_Test = "[Options: bread, dead, lamb, school] Mary had a little ___1___, her father shot it ___2___. Now it follows her to ___3___ between two bits of ___4___."
-    print Third_Test
-    blanks_index = 0
-    while blanks_index < len(blanks):
-        user_input= raw_input("What goes into slot" + blanks[blanks_index] + ": ")
-        while user_input != Third_Test_Answers[blanks_index]:
-            print "\nYour answer was wrong. Try again.\n"
-            user_input = raw_input("Type it here again: ")
-        else:
-            print "nice job! that is the right answer!\n"
-            if check_answer_Third_Test(user_input, Third_Test_Answers, blanks_index) == "Correct":
-                Second_Test = Third_Test.replace(blanks[blanks_index],user_input)
-                blanks_index += 1
-                print Third_Test
-                if blanks_index == len(blanks):
-                    print " "
-                    print "You got everything correct! You Genius!!"
-                    print " "
-                    Game_Restart()
+def check_answer(answer, index):
+    index = 0
+    user_input = raw_input("What goes into slot" + blanks[blanks_index] + ": ")
+    attempts = 5
+    while user_input != answer:
+         attempts -=1
+         print "\nYour answer was wrong. Try again.\n" + "Remaining attempts" + attempts
+         user_input = raw_input("Type it here again: ")
+         if attempts ==0:
+             print "You have no gueeses left! Sorry!!! "
+             Game_Restart()
+#       # for you to implement
+#       # print "try again" message
+#       # decrement attempts
+#       # ask user input again
+#       # if attempts == 5 use print a message and use exit() to quit
 
 ###########################################
 # Hopefully the fruit of all this labour
 
 def Get_Started():
+    #Starts the game and greets the player
     greeting()
     begin = raw_input("Would you like to begin? [Type: yes/no]: ")
     if begin in Affirmative:
