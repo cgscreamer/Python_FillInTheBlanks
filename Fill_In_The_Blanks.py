@@ -15,16 +15,23 @@ Third_Test_Answers = ["lamb", "dead", "school", "bread"]
 
 Affirmative = ["yes", "Yes", "Y", "y"]
 
+tests = [First_Test, Second_Test, Third_Test]
+answers = [First_Test_Answers, Second_Test_Answers, Third_Test_Answers]
+
+LEVELS = ["Easy", "Medium", "Hard"]
+EASY = 0
+MEDIUM = 1
+HARD = 2
+
 Game_One_Level = ["Easy", "easy"]
 
 Game_Two_Level = ["Medium", "medium"]
 
 Game_Three_Level = ["Hard", "hard"]
 
-tests = [First_Test, Second_Test, Third_Test]
-answers = [First_Test_Answers, Second_Test_Answers, Third_Test_Answers]
+answer_limit = 3
+attempts_limit = 0
 
-LEVELS = ["easy", "medium", "hard"]
 
 ####################
 # Helper Functions and probably a lot of stuff I broke
@@ -44,21 +51,28 @@ def greeting():
 def get_setup():
     # Getting the difficulty levels set up correctly
     # lower() transforms the string in all lowercase so you have to specify: `easy, Easy, EAsy, EASy`
-    print 'What Level would you like to try? Easy/Medium/Hard?'
-    difficulty = raw_input("Choose a Level: ")
-    index = 0
-    choose_level = None
-    for level in LEVELS:
-        if difficulty == level.lower():
-            choose_level = index
-        index += 1
+        print 'What Level would you like to try? Easy/Medium/Hard?'
+        difficulty = raw_input("Choose a Level: ")
 
-    if choose_level == None:
-        print "Wrong level."
-        exit()
-    chosen_test = tests[chose_level]
-    chosen_answers = answers[chose_level]
-    game(chosen_test, chosen_answers)
+        if difficulty in Game_One_Level:
+            print "\nYou chose: Easy.\n"
+            return tests[EASY], answers[EASY]
+
+        elif difficulty in Game_Two_Level:
+            print "\nYou chose: Medium \n"
+            return tests[MEDIUM], answers[MEDIUM]
+
+        elif  difficulty in Game_Three_Level:
+            print "\nYou chose: Hard \n"
+            return tests[HARD], answers[HARD]
+
+        else:
+            print "Wrong level."
+            Game_Restart()
+        chosen_test = tests(difficulty)
+        chosen_answers = answers(difficulty)
+
+
 
 def Game_Restart():
     #For after the game has completed, if the player wants to play again
@@ -67,45 +81,47 @@ def Game_Restart():
         return Get_Started()
     else:
         print "Ok, See you later, Alligator!"
+        exit()
 
-def game(test, answers):
-    def play_game(level):
-#Example function with PEP 484 type annotations.
-#    Input:
-#        level (test): Test filled with blanks
-#    Behavior:
-#        For a given level it launches the main game logic.
-#        It checks the user input.
-#        If the user guesses right the current blanks is replaced
-#        with the right answer then the quiz is print.
-#        This process happens until all blanks are found
-#    Return:
-#        None.
-#    """
-        index = 0
-    for answer in answers:
-        print test
-        check_answer(answer, index)
-        test = test.replace(blanks[index], answer)
-        index += 1
-    print test
 
-def check_answer(answer, index):
+def check_answer(chosen_test, chosen_answers, index, attempts):
+    user_input = raw_input("What goes into slot" + blanks[index] + ": ")
+    while user_input == chosen_answers[index]:
+        correct_answer(chosen_test, chosen_answers, index)
+    if user_input != chosen_answers[index]:
+        wrong_answer(chosen_test, chosen_answers, index, attempts)
+
+
+def correct_answer(chosen_test, chosen_answers, index):
     index = 0
-    user_input = raw_input("What goes into slot" + blanks[blanks_index] + ": ")
+    while index < answer_limit:
+        chosen_test = chosen_test.replace(blanks[index], chosen_answers[index])
+        print "That's Right!! Well done!"
+        print chosen_test
+        index += 1
+        user_input = raw_input("What goes into slot" + blanks[index] + ": ")
+        if index == answer_limit:
+            print "You've Won the Game!! Congratulations"
+            Game_Restart()
+
+def wrong_answer(chosen_test, chosen_answers, index, attempts):
+    if attempts == attempts_limit:
+        print "You have no gueeses left! Sorry!!! "
+        Game_Restart()
+    else:
+        attempts -=1
+        print "\nYour answer was wrong. Try again. Remaining attempts: " + str(attempts)
+        check_answer(chosen_test, chosen_answers, index, attempts)
+
+
+def game(chosen_test, chosen_answers):
+    print chosen_test
+    index = 0
     attempts = 5
-    while user_input != answer:
-         attempts -=1
-         print "\nYour answer was wrong. Try again.\n" + "Remaining attempts" + attempts
-         user_input = raw_input("Type it here again: ")
-         if attempts ==0:
-             print "You have no gueeses left! Sorry!!! "
-             Game_Restart()
-#       # for you to implement
-#       # print "try again" message
-#       # decrement attempts
-#       # ask user input again
-#       # if attempts == 5 use print a message and use exit() to quit
+    for answer in chosen_answers:
+        check_answer(chosen_test, chosen_answers, index, attempts)
+
+
 
 ###########################################
 # Hopefully the fruit of all this labour
@@ -117,7 +133,9 @@ def Get_Started():
     if begin in Affirmative:
         print "Fantastic! Let's begin:"
         print " "
-        return get_setup()
+        chosen_test, chosen_answers =  get_setup()
+        game(chosen_test, chosen_answers)
+
     elif begin == "no":
         print "Thanks for stopping by! Now...RUN!!"
 
