@@ -32,9 +32,8 @@ Game_Three_Level = ["Hard", "hard"]
 answer_limit = 3
 attempts_limit = 0
 
-
-####################
-# Helper Functions and probably a lot of stuff I broke
+##################
+# Functions
 
 def greeting():
     # Say Hello, and give the player a name.
@@ -85,6 +84,7 @@ def Game_Restart():
 
 
 def check_answer(chosen_test, chosen_answers, index, attempts):
+# Checks the sanswers and compares them to the selected answer list
     user_input = raw_input("What goes into slot" + blanks[index] + ": ")
     while user_input == chosen_answers[index]:
         correct_answer(chosen_test, chosen_answers, index)
@@ -93,6 +93,7 @@ def check_answer(chosen_test, chosen_answers, index, attempts):
 
 
 def correct_answer(chosen_test, chosen_answers, index):
+#Tells the program how to deal with a correct answer
     index = 0
     while index < answer_limit:
         chosen_test = chosen_test.replace(blanks[index], chosen_answers[index])
@@ -105,6 +106,7 @@ def correct_answer(chosen_test, chosen_answers, index):
             Game_Restart()
 
 def wrong_answer(chosen_test, chosen_answers, index, attempts):
+#Tells the program how to deal with a wrong answer
     if attempts == attempts_limit:
         print "You have no gueeses left! Sorry!!! "
         Game_Restart()
@@ -115,16 +117,13 @@ def wrong_answer(chosen_test, chosen_answers, index, attempts):
 
 
 def game(chosen_test, chosen_answers):
+#The Game in action
     print chosen_test
     index = 0
     attempts = 5
     for answer in chosen_answers:
         check_answer(chosen_test, chosen_answers, index, attempts)
 
-
-
-###########################################
-# Hopefully the fruit of all this labour
 
 def Get_Started():
     #Starts the game and greets the player
